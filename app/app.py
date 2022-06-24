@@ -1,5 +1,5 @@
 from flask import Flask # This is the main module where the server starts
-from routes import vehicles_route # Routes
+from routes import vehicles_route, delegations_route # Routes
 
 
 # The app is created
@@ -11,8 +11,12 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    # Blueprints
+
+    # Blueprints for vehicles
     app.register_blueprint(vehicles_route.main)
+
+    # Blueprints for delegations
+    app.register_blueprint(delegations_route.main)
 
     # Error handler
     app.register_error_handler(404, not_found)
