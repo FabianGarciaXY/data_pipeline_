@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
 
-  flask_app:
+  app:
     container_name: flask_container
     image: flask_app:v1
     build:
@@ -12,10 +12,15 @@ services:
     environment:
       - PORT=5000
       - FLASK_ENV=development
+      - PG_HOST=db
+      - PG_PORT=5432
+      - PG_DATABASE=vehicles_db
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
     depends_on:
-      - postgres_db
+      - db
 
-  postgres_db:
+  db:
     container_name: postgres_container
     image: "postgres:12"
     restart: always
