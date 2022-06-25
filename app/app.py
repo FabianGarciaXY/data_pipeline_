@@ -11,13 +11,11 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-
     # Blueprints for vehicles
     app.register_blueprint(vehicles_route.main)
-
     # Blueprints for delegations
     app.register_blueprint(delegations_route.main)
-
     # Error handler
     app.register_error_handler(404, not_found)
-    app.run(host='0.0.0.0', port=5000)
+    # Excuting the app
+    app.run(debug=True, host='0.0.0.0', port=5000)
