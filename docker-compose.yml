@@ -17,6 +17,7 @@ services:
       - PG_DATABASE=vehicles_db
       - PG_USER=postgres
       - PG_PASSWORD=postgres
+      - VEHICLES_API=https://datos.cdmx.gob.mx/api/3/action/datastore_search?resource_id=ad360a0e-b42f-482c-af12-1fd72140032e&limit=1000
     depends_on:
       - db
 

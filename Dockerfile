@@ -11,5 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code
 COPY . .
 
+# Setting up python path environment
+ENV PYTHONPATH="/app/src:$PYTHONPATH"
+
 # Executing server
 CMD ["python", "./src/app.py"]
