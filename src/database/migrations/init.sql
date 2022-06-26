@@ -1,4 +1,4 @@
--- CREATING VEHICLES TABLE FOR vehicles_db THAT WILL CONTAIN DATA FETCHED FROM metrobuses API of CDMX open data
+-- Creating vehicles table for vehicles_db that will contain data fetched from metrobuses API of CDMX open data
 CREATE TABLE IF NOT EXISTS vehicles (
   id SERIAL PRIMARY KEY ,
   date_updated VARCHAR(22) NOT NULL,
