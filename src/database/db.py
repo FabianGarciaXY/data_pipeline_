@@ -5,6 +5,7 @@ from psycopg2 import connect
 
 # Excuting connection
 def connect_db():
+    
     try:
         # Getting credentials from docker-compose environment variables
         host = os.environ['PG_HOST']
