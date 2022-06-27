@@ -15,4 +15,5 @@ COPY . .
 ENV PYTHONPATH="/app/src:$PYTHONPATH"
 
 # Executing server
-CMD ["python", "./src/app.py"]
+RUN ["chmod", "+x", "./init.sh"]
+ENTRYPOINT [ "bash", "init.sh" ]

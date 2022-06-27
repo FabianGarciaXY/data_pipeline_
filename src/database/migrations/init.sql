@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS vehicles (
   trip_id INTEGER NOT NULL,
   trip_start_date INTEGER NOT NULL,
   trip_route_id SMALLINT NOT NULL,
-  delegation VARCHAR(30) NOT NULL,
-  vehicle_address VARCHAR(200) NOT NULL,
+  delegation VARCHAR(30) NULL,
+  vehicle_address VARCHAR(200) NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
