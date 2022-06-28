@@ -5,18 +5,15 @@ from psycopg2 import connect
 
 # Excuting connection
 def connect_db():
-    
     try:
-        # Getting credentials from docker-compose environment variables
-        host = os.environ['PG_HOST']
-        port = os.environ['PG_PORT']
-        db = os.environ['PG_DATABASE']
-        user = os.environ['PG_USER']
-        password = os.environ['PG_PASSWORD']
-
-        # Connecting to the database
-        connection = connect(dbname=db, user=user, password=password, host=host, port=port)
+        # Getting credentials from docker-compose environment variables for connecting to the database
+        connection = connect(host = os.environ['AWS_PG_HOST'],
+                             port = os.environ['AWS_PG_PORT'],
+                             dbname = os.environ['AWS_PG_DATABASE'],
+                             user = os.environ['AWS_PG_USER'],
+                             password = os.environ['AWS_PG_PASS'])
+                             
         return connection
-
+        
     except Exception as ex:
         raise ex

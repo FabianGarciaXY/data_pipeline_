@@ -12,9 +12,8 @@ CREATE TABLE IF NOT EXISTS vehicles (
   position_odometer SMALLINT NOT NULL,
   trip_schedule_relationship SMALLINT NOT NULL,
   trip_id INTEGER NOT NULL,
-  trip_start_date INTEGER NOT NULL,
-  trip_route_id SMALLINT NOT NULL,
+  trip_start_date INTEGER NOT NULL DEFAULT 0,
+  trip_route_id SMALLINT NOT NULL DEFAULT 0,
   delegation VARCHAR(30) NULL,
-  vehicle_address VARCHAR(200) NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
