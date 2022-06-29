@@ -2,9 +2,7 @@
 
 # Get Data from api and load it into the database
 echo "Getting data ..."
-python ./src/utils/seed.py
-
-echo "Done!"
+# python ./src/utils/seed.py
 
 # Run the server
-python ./src/app.py
+python ./src/api/app.py
