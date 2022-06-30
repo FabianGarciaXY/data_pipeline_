@@ -52,10 +52,10 @@ El proyecto se dividio en dos directorios principales: `/api`: contiene la API, 
     │   ├── models           # Data model definition
     │   └── routes           # API endpoints
     ├── data 
-    │   ├── jobs             # Module to data into the database
+    │   ├── jobs             # Module to save the data into the database
     │   ├── resources     
     │   │   └── inputs       # Contain the script to collect data
-    │   ├── scripts          # A bash script to execute the diferent tasks(get data, start server)
+    │   ├── scripts          # A bash script to execute the diferent tasks(get data and start server)
     │   └── transformations  # Here is the code to create a the dataframe
     └───
 ```
