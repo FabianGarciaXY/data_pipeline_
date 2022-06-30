@@ -12,8 +12,7 @@ def create_dataframe(fetch_data, get_location):
     for vehicle in data:
         # The get_location function, gives us the delegation of each vehicle        
         delegation = get_location(vehicle['geographic_point']); 
-        print(delegation, sep='-')
-        # 
+        # Appending the data to the list
         vehicles_list.append({
             'date_updated': vehicle['date_updated'], 
             'vehicle_id': vehicle['vehicle_id'], 
