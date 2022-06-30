@@ -4,21 +4,43 @@ from psycopg2 import connect
 from sqlalchemy import create_engine
 
 
-host = os.environ['AWS_PG_HOST']
-port = os.environ['AWS_PG_PORT']
-dbname = os.environ['AWS_PG_DATABASE']
-user = os.environ['AWS_PG_USER']
-password = os.environ['AWS_PG_PASS']
+#This module contains configuration for connecting to db.
 
-# Excuting connection
+
+# @description: Function to connect aws database(postgres)
+# @returns: connection with pycopg2
 def connect_db():
-    try:
-        # Getting credentials from docker-compose environment variables for connecting to the database
-        connection = connect(host=host, port=port, dbname=dbname, user=user, password=password)
-        return connection
-    except Exception as ex:
-        raise ex
+    # Getting credentials from docker-compose environment variables.
+    host = os.environ['AWS_PG_HOST']
+    port = os.environ['AWS_PG_PORT']
+    dbname = os.environ['AWS_PG_DATABASE']
+    user = os.environ['AWS_PG_USER']
+    password = os.environ['AWS_PG_PASS']
 
-# Creating a database engine with sqlalchemy
+    try:
+        # Connection with psycopg2
+        connection = connect(host=host, port=port, dbname=dbname, user=user, password=password)
+
+    except Exception as err:
+        raise err
+
+    return connection
+
+
+# @description: Function to connect aws database(postgres)
+# @returns: connection with sqlalchemy
 def get_engine():
-  return create_engine(f'postgresql://{user}:{password}@{host}:{port}/{dbname}')
+    # Getting credentials from docker-compose environment variables.
+    host = os.environ['AWS_PG_HOST']
+    port = os.environ['AWS_PG_PORT']
+    dbname = os.environ['AWS_PG_DATABASE']
+    user = os.environ['AWS_PG_USER']
+    password = os.environ['AWS_PG_PASS']
+
+    try: 
+        # Connection with sqlalchemy
+        engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{dbname}')
+    except Exception as err:
+        raise err
+
+    return engine
