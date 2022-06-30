@@ -1,6 +1,6 @@
 # **Data pipeline :star2:**
 
-*Proyecto como parte de prueba tecnica en con Ankor.* :man_technologist:
+*Proyecto como parte de prueba tecnica en Ankor.* :man_technologist:
 
 ---
 ## Contenido
@@ -36,9 +36,9 @@ consultado mediante un API Rest filtrando por unidad o por alcaldía con las sig
 
 ## Diseño del Proyecto :art:<a id="id1"></a>
 
-Para la solución del problema se diseñó del flujo de datos obteniendo primero los datos en formato JSON desde la API de para despues transformarlos a un dataframe con las columnas y datos adecuados para poder insertarse en una base de datos.
+Para la solución del problema se diseñó del flujo de datos obteniendo primero los datos en formato JSON desde la API para despues transformarlos a un dataframe con las columnas y datos adecuados para insertarse en una base de datos.
 
-Se uso programación funcional, tratando de usar funciones puras que retornen siempre los mismos outputs para los mismos inputs, eliminación de variables globales y evitando la mutación de los datos.
+Se uso programación funcional, tratando de usar funciones puras que retornen siempre los mismos outputs, eliminando variables globales y evitando la mutación de los datos.
 
 El proyecto se dividio en dos directorios principales: `/api`: contiene la API, `/data`: la logica del flujo de datos.
 
