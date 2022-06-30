@@ -36,7 +36,30 @@ consultado mediante un API Rest filtrando por unidad o por alcaldía con las sig
 
 ## Diseño del Proyecto :art:<a id="id1"></a>
 
-Para la solución del problema se realizo un diseño del flujo de datos obtenidos desde los datos abiertos de metrobuses de CDMX para que finalmente puedan ser expuestos mediante un API. 
+Para la solución del problema se diseñó del flujo de datos obteniendo primero los datos en formato JSON desde la API de para despues transformarlos a un dataframe con las columnas y datos adecuados para poder insertarse en una base de datos.
+
+Se uso programación funcional, tratando de usar funciones puras que retornen siempre los mismos outputs para los mismos inputs, eliminación de variables globales y evitando la mutación de los datos.
+
+El proyecto se dividio en dos directorios principales: `/api`: contiene la API, `/data`: la logica del flujo de datos.
+
+```PYTHON
+| # Root
+└── src
+    ├── api
+    │   ├── app.py           # Main file: starts server
+    │   ├── controllers      # Access to data
+    │   ├── database         # Database connection
+    │   ├── models           # Data model definition
+    │   └── routes           # API endpoints
+    ├── data 
+    │   ├── jobs             # Module to data into the database
+    │   ├── resources     
+    │   │   └── inputs       # Contain the script to collect data
+    │   ├── scripts          # A bash script to execute the diferent tasks(get data, start server)
+    │   └── transformations  # Here is the code to create a the dataframe
+    └───
+```
+Se creo un contenedor con docker para el servidor de la API Flask y se uso una base de datos relacional en la nube de AWS para la persistencia de los datos.
 
 <br>
 
@@ -57,23 +80,25 @@ Para la solución del problema se realizo un diseño del flujo de datos obtenido
 
 ```mermaid
 graph TD
-
     %% Metrobuses a Reader
-    A1(("METROBUSES <br> API"))--Feth-data-->B1(["READER <br> SCRIPT"])
+    A1(("METROBUSES <br> API"))--"Fetch-data"-->B1(["READER SCRIPT"])
     %% Geocoder a Reader
-    A2(("GOOGLE <br> GEOCODER <br> API"))--Delegation-->D1
+    A2(("GOOGLE <br> GEOCODING <br> API"))--Delegation-->D1
+    B1--"Reverse Geocoding"-->A2
     %% Reader a Geocoder
-    B1--"Reverse <br> Geocoding"-->A2
     %% Reader a Model
-    B1--"Vehicles data"-->D1("DATA MODEL")
+    B1--"Vehicles data"-->D1("PANDAS DATAFRAME")
+
+
+    D1--"Data transformation"-->D2("DATA MODEL")
     
 
     %% Database
-    D1--"Saving data"-->F1[(" <br>POSTGRES <br>METROBUSES DATABASE <br>")]
-    
-    %% Controllers
-    F1--"Vehicles queries"----G1(DELEGATIONS <br> CONTROLLER)
-    F1--"Delegation queries"----G2(VEHICLES <br> CONTROLLER)
+    D2--"Data saving"-->F1[(" <br> AWS <br> POSTGRES DATABASE <br> 'VEHICLES'")]
+
+        %% Controllers
+    F1--"Vehicles queries"----G1(DELEGATIONS CONTROLLER)
+    F1--"Delegation queries"----G2(VEHICLES CONTROLLER)
 
     G2 --"Endpoints"-->I1
     G1 --"Endpoints"--> I1{API <br> ROUTER}
@@ -83,6 +108,7 @@ graph TD
     I1 --> |Get|-E2([/Metrubuses/:id])
     I1 --> |Get|-E3([/Alcaldias])
     I1 --> |Get|-E4(["/Alcaldias/:nombre"])
+
 ```
 <br>
 
