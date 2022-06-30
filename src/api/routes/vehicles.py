@@ -1,6 +1,5 @@
 # Importing  Blueprint to use routes and jsonify and request for JSON responses
-from crypt import methods
-from flask import Blueprint, jsonify , request
+from flask import Blueprint, jsonify
 
 # Blueprint for vehicles routes
 vehicle = Blueprint('vehicles_bp', __name__, url_prefix='/api/')
