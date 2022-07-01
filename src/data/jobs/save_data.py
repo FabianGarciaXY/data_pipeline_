@@ -1,27 +1,22 @@
 # Importing db connection, dataframe and functions to get data
-from api.database.db import get_engine, connect_db
-from data.transformations.dataframe import create_dataframe
-from data.resources.inputs.reader import fetch_vehicles_data, get_location
+from api.database.db import connect_db, get_engine
+from data.transformations.clean_data import df
 
 # Module to save data into the aws postgres database
 
 # @description: Function to save data in db.
-# @params {string, pandas object, funtion, function}: 
-# - The database connection with sqlalchemy defined in db module
+# @params {string, string, pandas dataframe}: 
+# - The database connection string with pycopg2
+# - The database connection string sqlalchemy
 # - The pandas dataframe conaining the vehicles data
-# - The function to fetch data from the vehicles API
-# - The function to get the location of the vehicles
-def save_data(conn, engine, dataframe, data, location):
-
+def save_data(conn, engine, dataframe):
     try:
         #Gettin connections
         conn = conn()
         engine = engine()
-
-        # Getting dataframe and saving it
-        df = dataframe(data, location)
-        df.to_sql('vehicles', con=engine, schema='public', if_exists='append', index=False)
         
+        # Getting dataframe and saving it into the database
+        dataframe.to_sql('vehicles', con=engine, schema='public', if_exists='append', index=False)
         conn.commit()
         conn.close()
 
@@ -30,4 +25,4 @@ def save_data(conn, engine, dataframe, data, location):
 
 
 # Calling the save_data function
-save_data(connect_db, get_engine, create_dataframe, fetch_vehicles_data, get_location)
+save_data(connect_db, get_engine, df)
