@@ -10,7 +10,7 @@
   * [Diagrama de Solución](#id1.2)
   * [Modelo de Datos](#id1.3)
   * [DDL](#id1.4)
-* [Instalacion y Ejecución](#id2)
+* [Setup](#id2)
 * [Previsualización](#id3)
 ---
 
@@ -43,21 +43,21 @@ Se uso programación funcional, tratando de usar funciones puras que retornen si
 El proyecto se dividio en dos directorios principales: `/api`: contiene la API, `/data`: la logica del flujo de datos.
 
 ```PYTHON
-| # Root
-└── src
-    ├── api
+│ # Root
+└── Src
+    ├── Api
     │   ├── app.py           # Main file: starts server
-    │   ├── controllers      # Access to data
-    │   ├── database         # Database connection
-    │   ├── models           # Data model definition
-    │   └── routes           # API endpoints
+    │   ├── Routes           # API endpoints
+    │   ├── Controllers      # Requests control
+    │   ├── Models           # Data model definition
+    │   ├── Services         # Access to data
+    │   └── Database         # Database connection
     ├── data 
-    │   ├── jobs             # Module to save the data into the database
-    │   ├── resources     
-    │   │   └── inputs       # Contain the script to collect data
-    │   ├── scripts          # A bash script to execute the diferent tasks(get data and start server)
-    │   └── transformations  # Here is the code to create a the dataframe
-    └───
+    │   ├── Resources        # Contain the script to collect data             
+    │   ├── Transformations  # Here is the code to create the dataframe and clean the data
+    │   ├── Jobs             # Module to save the data into the database
+    │   └── Scripts          # Bash script to execute the tasks (create table, get data and start the server)
+    └──
 ```
 Se creo un contenedor con docker para el servidor de la API Flask y se uso una base de datos relacional en la nube de AWS para la persistencia de los datos.
 
@@ -73,6 +73,7 @@ Se creo un contenedor con docker para el servidor de la API Flask y se uso una b
 * *[Psycopg2](https://www.psycopg.org/docs/)*
 * *[Sqlalchemy](https://www.sqlalchemy.org/)*
 * *[Google geocoder](https://developers.google.com/maps/documentation/geocoding/overview)*
+* *[Unidecode](https://pypi.org/project/Unidecode/)*
 
 <br>
 
@@ -96,12 +97,15 @@ graph TD
     %% Database
     D2--"Data saving"-->F1[(" <br> AWS <br> POSTGRES DATABASE <br> 'VEHICLES'")]
 
-        %% Controllers
-    F1--"Vehicles queries"----G1(DELEGATIONS CONTROLLER)
-    F1--"Delegation queries"----G2(VEHICLES CONTROLLER)
+    F1--"Vehicles queries"----S1(VEHICLES SERVICE)
+    F1--"Delegation queries"----S2(DELEGATIONS SERVICE)
 
-    G2 --"Endpoints"-->I1
-    G1 --"Endpoints"--> I1{API <br> ROUTER}
+    %% Controllers
+    S1---G1(VEHICLES CONTROLLER)
+    S2---G2(DELEGATIONS CONTROLLER)
+
+    G1 --"Endpoints"-->I1
+    G2 --"Endpoints"--> I1{API <br> ROUTER}
 
     %% Endpoints
     I1 --> |Get|-E1([/Metrobuses])
@@ -176,12 +180,9 @@ Para desplegar el servicio se requiere unicamente contar con docker y docker com
   # Clona el repositorio
   git clone git@github.com:FabianGarciaXY/data_pipeline_.git
 
-  # Construye la imagen
-  cd Data_pipeline/ && docker compose build
-
-  # Corre los contenedores
-  docker compose up
-
+  # Ejecución
+  cd data_pipeline_/ && docker compose up
+  
 ```
 
 <br>
@@ -190,12 +191,12 @@ Para desplegar el servicio se requiere unicamente contar con docker y docker com
 
 <br>
 
-|            Endpoint                |        Request      |       Response                                    | Ejemplo                          |
-| -----------------------------------|:-------------------:|:-------------------------------------------------:|:--------------------------------:|
-| `localhost:5000/metrobuses`        |         GET         | Todas las unidades disponibles                    | `localhost:5000/metrobuses`      |
-| `localhost:5000/metrobuses/:id`    |         GET         | Un vehiculo filtrado por id                       | `localhost:5000/metrobuses/3`    |
-| `localhost:5000/alcaldias`         |         GET         | Una lista de las alcaldías disponibles            | `localhost:5000/alcaldias`       |
-| `localhost:5000/alcaldias/:nombre` |         GET         | Una lista de las unidades disponibles por alcaldía|`localhost:5000/alcaldias/tlalpan`|
+|            Endpoint                    |        Request      |       Response                                    | Ejemplo                               |
+| ---------------------------------------|:-------------------:|:-------------------------------------------------:|:-------------------------------------:|
+| `localhost:5000/api/metrobuses`        |         GET         | Todas las unidades disponibles                    | `localhost:5000/api/metrobuses`       |
+| `localhost:5000/api/metrobuses/:id`    |         GET         | Un vehiculo filtrado por id                       | `localhost:5000/api/metrobuses/3`     |
+| `localhost:5000/api/alcaldias`         |         GET         | Una lista de las alcaldías disponibles            | `localhost:5000/api/alcaldias`        |
+| `localhost:5000/api/alcaldias/:nombre` |         GET         | Una lista de las unidades disponibles por alcaldía| `localhost:5000/api/alcaldias/tlalpan`|
 
 
 <br>
@@ -206,27 +207,27 @@ Para desplegar el servicio se requiere unicamente contar con docker y docker com
 
 <br>
 
-Obtener una lista de unidades disponibles
+`Obtener una lista de unidades disponibles`:
 
-![gif1]()
-
-<br><br>
-
-Consultar la ubicación de una unidad dado su ID
-
-![gif2]()
+![gif1](./src/api/assets/first.gif)
 
 <br><br>
 
-Obtener una lista de alcaldías disponibles
+`Consultar la ubicación de una unidad dado su ID`:
 
-![gif3]()
+![gif2](./src/api/assets/second.gif)
 
 <br><br>
 
-Obtener la lista de unidades que se encuentren dentro de una alcaldía
+`Obtener una lista de alcaldías disponibles`:
 
-![gif4]()
+![gif3](./src/api/assets/third.gif)
+
+<br><br>
+
+`Obtener la lista de unidades que se encuentren dentro de una alcaldía`:
+
+![gif4](./src/api/assets/fourth.gif)
 
 <br><br>
 
