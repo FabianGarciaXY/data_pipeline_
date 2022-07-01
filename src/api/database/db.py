@@ -1,46 +1,45 @@
-# Importing os and connect function to connect to database
-import os
+# Importing function to get credentials and modules to connect to database
 from psycopg2 import connect
 from sqlalchemy import create_engine
+from api.config.config import get_credentials
 
-
-#This module contains configuration for connecting to db.
-
+# This module contains configuration for connecting to db.
 
 # @description: Function to connect aws database(postgres)
 # @returns: connection with pycopg2
 def connect_db():
-    # Getting credentials from docker-compose environment variables.
-    host = os.environ['AWS_PG_HOST']
-    port = os.environ['AWS_PG_PORT']
-    dbname = os.environ['AWS_PG_DATABASE']
-    user = os.environ['AWS_PG_USER']
-    password = os.environ['AWS_PG_PASS']
-
     try:
-        # Connection with psycopg2
-        connection = connect(host=host, port=port, dbname=dbname, user=user, password=password)
+        conf = get_credentials()
+        connection = connect(
+            host=conf["host"],
+            port=conf["port"],
+            dbname=conf["dbname"],
+            user=conf["user"],
+            password=conf["password"],
+        )
+        return connection
 
     except Exception as err:
         raise err
 
-    return connection
 
 
 # @description: Function to connect aws database(postgres)
 # @returns: connection with sqlalchemy
 def get_engine():
-    # Getting credentials from docker-compose environment variables.
-    host = os.environ['AWS_PG_HOST']
-    port = os.environ['AWS_PG_PORT']
-    dbname = os.environ['AWS_PG_DATABASE']
-    user = os.environ['AWS_PG_USER']
-    password = os.environ['AWS_PG_PASS']
+    try:
+        conf = get_credentials()
+        engine = create_engine(
+            "postgresql://{}:{}@{}:{}/{}".format(
+                conf["user"],
+                conf["password"],
+                conf["host"],
+                conf["port"],
+                conf["dbname"],
+            )
+        )
+        return engine
 
-    try: 
-        # Connection with sqlalchemy
-        engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{dbname}')
     except Exception as err:
         raise err
 
-    return engine
