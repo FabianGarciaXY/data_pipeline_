@@ -1,6 +1,7 @@
 import os
 
 # @description: Function to get env variables
+# @return: { dictionary } a dictionary with the environment variables
 def get_credentials():
     env_vars = {
         'host': os.environ['AWS_PG_HOST'],

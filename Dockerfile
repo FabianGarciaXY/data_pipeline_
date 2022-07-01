@@ -15,5 +15,5 @@ COPY . .
 ENV PYTHONPATH="/app/src:$PYTHONPATH"
 
 # Executing server
-RUN ["chmod", "+x", "./src/data/scripts/start.sh"]
-ENTRYPOINT [ "bash", "./src/data/scripts/start.sh" ]
+RUN ["chmod", "+x", "./src/data/scripts/tasks.sh"]
+ENTRYPOINT [ "bash", "./src/data/scripts/tasks.sh" ]
