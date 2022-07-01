@@ -1,3 +1,4 @@
+import re
 from psycopg2 import extras
 from api.database.db import connect_db
 
@@ -10,7 +11,7 @@ def get_delegations():
         connection = connect_db()
         with connection.cursor(cursor_factory=extras.RealDictCursor) as cursor:
             # Executing query
-            query = 'SELECT DISTINCT delegation FROM vehicles WHERE delegation IS NOT NULL;'
+            query = "SELECT DISTINCT delegation FROM vehicles WHERE delegation != 'Not available';"
             cursor.execute(query)
             response = cursor.fetchall()
             cursor.close()
@@ -34,10 +35,10 @@ def get_vehicles(name):
             cursor.close()
             connection.close()
             
-        if len(response) > 0:
+        if response == []:
+            return {'message': 'This delegation does not exits'}
+        else: 
             return response
-        else:
-            return 'No available vehicles in this delegation'
             
     except Exception as err:
         raise err
