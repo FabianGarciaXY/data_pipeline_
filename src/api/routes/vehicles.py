@@ -1,5 +1,6 @@
 # Importing  Blueprint to use routes and jsonify and request for JSON responses
 from flask import Blueprint, jsonify
+import api.controllers.vehicles as controller
 
 # Blueprint for vehicles routes
 vehicle = Blueprint('vehicles_bp', __name__, url_prefix='/api/')
@@ -10,12 +11,16 @@ vehicle = Blueprint('vehicles_bp', __name__, url_prefix='/api/')
 def root():
     return jsonify({'message': 'Hi World!'})
 
+
 # Get all available vehicles
 @vehicle.route('/metrobuses', methods=['GET'])
 def get_available_vehicles():
-    return jsonify({'message': 'This page will contain info about vehicles'})
+    vehicles = controller.get_available_vehicles()
+    return jsonify(vehicles)
+
 
 # Get vehicle location by ID
 @vehicle.route('/metrobuses/<int:id>', methods=['GET'])
-def get_vehicle_addres_by_id(id):
-    return jsonify({'message': id})
+def get_vehicle_address_by_id(id):
+    vehicle = controller.get_vehicle_address_by_id(id)
+    return jsonify({'vehicle': vehicle})
