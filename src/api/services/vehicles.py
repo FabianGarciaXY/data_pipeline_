@@ -1,22 +1,20 @@
 from psycopg2 import extras
 from api.database.db import connect_db
 
-# This module contains all functions access to data accordint with bussiness rules
+# This module contains all functions access to data according with bussiness rules
 
 # @description: Function to access to metrobuses data
 # @return: the response from the database to the controller
 def get_vehicles():
-    
     try:
         connection = connect_db()
         with connection.cursor(cursor_factory=extras.RealDictCursor) as cursor:
+            # Executing query
             query = 'SELECT * FROM vehicles WHERE trip_id IS NOT NULL ORDER BY vehicle_id;'
-        	# Executing query
             cursor.execute(query)
             response = cursor.fetchall()
             cursor.close()
             connection.close()
-            
         return response
             
     except Exception as err:
@@ -26,7 +24,6 @@ def get_vehicles():
 # @description: Function to access to vehicle location data
 # @return: the response from the database
 def get_vehicle(id):
-    
     try:
         connection = connect_db()
         with connection.cursor(cursor_factory=extras.RealDictCursor) as \
@@ -35,8 +32,7 @@ def get_vehicle(id):
             cursor.execute(query, (id, ))
             response = cursor.fetchone()
             cursor.close()
-            connection.close()
-            
+            connection.close()       
         return response
         
     except Exception as err:

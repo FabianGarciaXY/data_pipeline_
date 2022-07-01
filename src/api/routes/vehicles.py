@@ -23,4 +23,4 @@ def get_available_vehicles():
 @vehicle.route('/metrobuses/<int:id>', methods=['GET'])
 def get_vehicle_address_by_id(id):
     vehicle = controller.get_vehicle_address_by_id(id)
-    return jsonify({'vehicle': vehicle})
+    return jsonify({'metrobus': vehicle})
