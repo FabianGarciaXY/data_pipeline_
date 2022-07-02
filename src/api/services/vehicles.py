@@ -32,7 +32,11 @@ def get_vehicle(id):
             cursor.execute(query, (id, ))
             response = cursor.fetchone()
             cursor.close()
-            connection.close()       
+            connection.close()
+            
+        if response is None:
+            return {'error' : 'vehicle with this id does not exist'}
+
         return response
         
     except Exception as err:

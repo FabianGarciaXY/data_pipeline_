@@ -52,7 +52,7 @@ El proyecto se dividio en dos directorios principales: `/api`: contiene la API, 
     │   ├── Models           # Data model definition
     │   ├── Services         # Access to data
     │   └── Database         # Database connection
-    ├── data 
+    ├── Data 
     │   ├── Resources        # Contain the script to collect data             
     │   ├── Transformations  # Here is the code to create the dataframe and clean the data
     │   ├── Jobs             # Module to save the data into the database

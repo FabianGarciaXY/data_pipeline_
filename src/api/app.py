@@ -1,6 +1,5 @@
 from flask import Flask # This is the main module where the server starts
-from routes import delegations, vehicles # Routes
-
+from api.routes import delegations, vehicles # Routes
 
 # The app is created
 app = Flask(__name__)
@@ -17,4 +16,4 @@ if __name__ == '__main__':
     # Error handler
     app.register_error_handler(404, not_found)
     # Excuting the app
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)

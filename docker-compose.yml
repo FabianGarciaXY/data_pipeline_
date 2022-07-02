@@ -11,7 +11,7 @@ services:
       - "5000:5000"
     environment:
       - PORT=5000
-      - FLASK_ENV=development
+      - FLASK_ENV=production
       - AWS_PG_HOST=my-instance.c1h8v31yc36v.us-east-1.rds.amazonaws.com
       - AWS_PG_PORT=5432
       - AWS_PG_DATABASE=vehicles_db

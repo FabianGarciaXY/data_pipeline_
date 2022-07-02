@@ -1,7 +1,7 @@
 # Importing function to get credentials and modules to connect to database
 from psycopg2 import connect
 from sqlalchemy import create_engine
-from api.config.config import get_credentials
+from api.config.config import secrets
 
 # This module contains configuration for connecting to db.
 
@@ -9,7 +9,7 @@ from api.config.config import get_credentials
 # @returns: connection with pycopg2
 def connect_db():
     try:
-        conf = get_credentials()
+        conf = secrets()
         connection = connect(
             host=conf["host"],
             port=conf["port"],
@@ -28,7 +28,7 @@ def connect_db():
 # @returns: connection with sqlalchemy
 def get_engine():
     try:
-        conf = get_credentials()
+        conf = secrets()
         engine = create_engine(
             "postgresql://{}:{}@{}:{}/{}".format(
                 conf["user"],
