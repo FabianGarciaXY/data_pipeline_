@@ -1,5 +1,5 @@
 # Importing db connection, dataframe and functions to get data
-from api.database.db import connect_db, get_engine
+from api.utils.db import connect_db, get_engine
 from data.transformations.clean_data import df
 
 # Module to save data into the aws postgres database
