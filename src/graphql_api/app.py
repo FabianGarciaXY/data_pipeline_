@@ -23,13 +23,9 @@ def graphql_server():
     # GraphQL queries are always sent as POST
     data = request.get_json()
     # Flask, the current request will always be accessible as flask.request
-    success, result = graphql_sync(
-        schema,
-        data,
-        context_value=request,
-    )
-
+    success, result = graphql_sync(schema, data, context_value=request,)
     status_code = 200 if success else 400
+    
     return jsonify(result), status_code
 
 
