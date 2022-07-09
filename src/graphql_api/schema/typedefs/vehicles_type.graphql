@@ -1,0 +1,27 @@
+
+type Vehicle {
+    id: ID!
+    vehicle_id: Int
+    date_updated: String
+    vehicle_label: Int
+    vehicle_current_status: String
+    position_latitude: Float
+    position_longitude: Float
+    geographic_point: String
+    position_speed: Int
+    position_odometer: Int
+    trip_schedule_relationship: Int
+    trip_id: Int
+    trip_start_date: Int
+    trip_route_id: Int
+    delegation: String
+    created_at: String
+}
+
+type Delegation {
+    name: String!
+}
+
+type Error {
+    message: String!
+}

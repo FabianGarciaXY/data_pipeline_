@@ -1,7 +1,8 @@
 # Importing function to get credentials and modules to connect to database
 from psycopg2 import connect
 from sqlalchemy import create_engine
-from api.config.config import secrets
+from sqlalchemy.ext.automap import automap_base
+from .config import secrets
 
 # This module contains configuration for connecting to db.
 
@@ -43,3 +44,5 @@ def get_engine():
     except Exception as err:
         raise err
 
+
+Base = automap_base()

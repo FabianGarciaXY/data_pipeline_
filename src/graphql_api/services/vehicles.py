@@ -1,5 +1,5 @@
 from psycopg2 import extras
-from api.database.db import connect_db
+from graphql_api.utils.db import connect_db
 
 # This module contains all functions access to data according with bussiness rules
 
@@ -28,7 +28,7 @@ def get_vehicle(id):
         connection = connect_db()
         with connection.cursor(cursor_factory=extras.RealDictCursor) as \
             cursor:
-            query = 'SELECT vehicle_id, delegation, geographic_point FROM vehicles WHERE vehicle_id = %s;'
+            query = 'SELECT * FROM vehicles WHERE vehicle_id = %s;'
             cursor.execute(query, (id, ))
             response = cursor.fetchone()
             cursor.close()

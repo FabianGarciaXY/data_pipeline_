@@ -1,0 +1,11 @@
+
+schema {
+    query: Query
+}
+
+type Query {
+    get_vehicles: [Vehicle]
+    get_vehicle_address_by_id(id: ID!):Vehicle
+    get_delegations:[Delegation]
+    get_vehicles_by_delegation(name: String!): [Vehicle]
+}

@@ -1,6 +1,5 @@
-import re
 from psycopg2 import extras
-from api.database.db import connect_db
+from graphql_api.utils.db import connect_db
 
 # This module contains functions to access to data according with bussiness rules
 
