@@ -1,6 +1,6 @@
 # **Data pipeline :star2:**
 
-*Proyecto como parte de prueba tecnica en Ankor.* :man_technologist:
+*Proyecto de pipeline de datos para obtener datos autobuses de cdmx y exponerlos en una API rest* :man_technologist:
 
 ---
 ## Contenido
