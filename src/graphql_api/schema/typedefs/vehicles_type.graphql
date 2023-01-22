@@ -1,3 +1,6 @@
+type Delegation {
+    name: String!
+}
 
 type Vehicle {
     id: ID!
@@ -16,12 +19,4 @@ type Vehicle {
     trip_route_id: Int
     delegation: String
     created_at: String
-}
-
-type Delegation {
-    name: String!
-}
-
-type Error {
-    message: String!
 }
